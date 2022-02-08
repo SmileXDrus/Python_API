@@ -1,6 +1,8 @@
 import json
 from json.decoder import JSONDecodeError
 
+# Задача: распарсить переменную json_text и вывести текст второго сообщения с помощью функции print
+
 json_str = '{"messages":[{"message":"This is the first message","timestamp":"2021-06-04 16:40:53"},{"message":"And ' \
            'this is a second message","timestamp":"2021-06-04 16:41:01"}]} '
 
