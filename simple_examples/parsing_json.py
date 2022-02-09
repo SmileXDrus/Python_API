@@ -24,9 +24,10 @@ def parsing_json_str(any_json):
     except JSONDecodeError:
         print("Respons is not JSON format")
     if (type(any_json)) == dict:
-        list_el = any_json['messages']
-        print(list_el, type(list_el))
-        print(list_el[1]['message'])
+        print(any_json['messages'][1]['message'])
+        # list_el = any_json['messages']
+        # print(list_el, type(list_el))
+        # print(list_el[1]['message'])
     else:
         print("Format is not str/dict")
 

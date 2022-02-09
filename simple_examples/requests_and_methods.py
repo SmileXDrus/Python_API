@@ -38,7 +38,6 @@ def third_ex(url):
 
 def fourth_ex(url):
     print('\n', "Start fourth_ex")
-    count = 0
     for i in range(len(method_list)):
         method = method_list[i]
         print(i, ' with method:', method)
