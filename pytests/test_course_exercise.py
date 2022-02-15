@@ -7,12 +7,12 @@ import requests
 
 class TestSomeSimpleTests:
 
-    @pytest.mark.first
+    @pytest.mark.ex10
     def test_check_input(self):
         phrase = input("Set a phrase: ")
         assert len(phrase) < 15
 
-    @pytest.mark.second
+    @pytest.mark.ex11
     def test_check_cookie(self):
         response = requests.get('https://playground.learnqa.ru/api/homework_cookie')
         if response.cookies.values() is not None:
@@ -22,4 +22,17 @@ class TestSomeSimpleTests:
             if 'HomeWork' in dict_1:
                 print("second way", dict_1["HomeWork"])
             assert dict_1["HomeWork"] == 'hw_value'
+
+    @pytest.mark.ex12
+    def test_check_header(self):
+        response = requests.get('https://playground.learnqa.ru/api/homework_header')
+        items = response.headers.items()
+        if items is not None:
+            answer = response.headers.get('x-secret-homework-header')  # first way
+            for key, value in items:  # second way
+                if 'x-secret-homework-header' in key:
+                    print(value)
+                    assert answer == value, "It is not required header "
+            print(answer)
+            assert answer == 'Some secret value', "It is not required header"
 
