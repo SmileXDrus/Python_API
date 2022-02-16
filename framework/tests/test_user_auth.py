@@ -1,8 +1,9 @@
 import pytest
 import requests
+from framework.lib.base_case import BaseCase
 
 
-class TestUserAuth:
+class TestUserAuth(BaseCase):
     exclude_params = [
         ('no_cookie'),
         ('no_token'),
@@ -17,12 +18,9 @@ class TestUserAuth:
             'password': '1234'
         }
         response1 = requests.post(url_login, data=data)
-        assert 'auth_sid' in response1.cookies, 'There is no auth cookie'
-        assert 'x-csrf-token' in response1.headers, 'There is no x-csrt-token'
-        assert 'user_id' in response1.json(), 'There is no user id'
-        self.auth_sid = response1.cookies.get('auth_sid')
-        self.token = response1.headers.get('x-csrf-token')
-        self.user_id = response1.json()['user_id']
+        self.auth_sid = self.get_cookie(response1, 'auth_sid')
+        self.token = self.get_header(response1, 'x-csrf-token')
+        self.user_id = self.get_json_value(response1, 'user_id')
 
     def test_positive_auth_check(self):
         # auth_sid, token, user_id = self.get_response()
