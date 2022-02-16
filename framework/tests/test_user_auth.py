@@ -1,6 +1,6 @@
 import pytest
 import requests
-from framework.lib.base_case import BaseCase
+from framework.test_lib.base_case import BaseCase
 
 
 class TestUserAuth(BaseCase):
