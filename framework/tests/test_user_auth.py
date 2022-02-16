@@ -1,7 +1,7 @@
 import pytest
 import requests
 from framework.test_lib.base_case import BaseCase
-
+from framework.test_lib.assertions import Assertions
 
 class TestUserAuth(BaseCase):
     exclude_params = [
@@ -29,10 +29,12 @@ class TestUserAuth(BaseCase):
             headers={"x-csrf-token": self.token},
             cookies={"auth_sid": self.auth_sid}
         )
-
-        assert 'user_id' in response2.json(), 'There is not user id in second response'
-        user_id_from_sec_response = response2.json()['user_id']
-        assert self.user_id == user_id_from_sec_response, 'User id from login is not equal user id from auth request'
+        Assertions.assert_json_value_by_name(
+            response2,
+            'user_id',
+            self.user_id,
+            'User id from login is not equal user id from auth request'
+        )
 
     @pytest.mark.parametrize('condition', exclude_params)
     def test_negative_auth_check(self, condition):
@@ -52,18 +54,10 @@ class TestUserAuth(BaseCase):
             response2 = requests.get(
                 self.url_auth
             )
-        assert 'user_id' in response2.json(), "There is no user id"
-        user_id_from_check = response2.json()['user_id']
-        assert user_id_from_check == 0, f'User is authorized with condition {condition}'
+        Assertions.assert_json_value_by_name(
+            response2,
+            'user_id',
+            0,
+            'User is authorized with condition {condition}'
+        )
 
-    ''' def get_response(self): # самописная реализация setup
-        response1 = requests.post(self.url_login, data=self.data)
-
-        assert 'auth_sid' in response1.cookies, 'There is no auth cookie'
-        assert 'x-csrf-token' in response1.headers, 'There is no x-csrt-token'
-        assert 'user_id' in response1.json(), 'There is no user id'
-        auth_sid = response1.cookies.get('auth_sid')
-        token = response1.headers.get('x-csrf-token')
-        user_id = response1.json()['user_id']
-        return auth_sid, token, user_id
-    '''
