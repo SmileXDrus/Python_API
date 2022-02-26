@@ -5,7 +5,7 @@ import pytest
 import requests
 from requests import Response
 
-import data_test
+from pytests import data_test
 
 
 class TestSomeSimpleTests:

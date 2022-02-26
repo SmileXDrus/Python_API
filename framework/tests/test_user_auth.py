@@ -1,31 +1,34 @@
+import allure
 import pytest
-import requests
 from framework.test_lib.base_case import BaseCase
 from framework.test_lib.assertions import Assertions
+from framework.test_lib.my_requests import MyRequests
+from framework.tests.tests_data_test import *
+import allure
 
+@allure.epic("Authorization cases")
 class TestUserAuth(BaseCase):
     exclude_params = [
         ('no_cookie'),
         ('no_token'),
         ('')
     ]
-    url_auth = 'https://playground.learnqa.ru/api/user/auth'
 
     def setup(self):
-        url_login = 'https://playground.learnqa.ru/api/user/login'
         data = {
             'email': 'vinkotov@example.com',
             'password': '1234'
         }
-        response1 = requests.post(url_login, data=data)
+        response1 = MyRequests.post(URL_LOGIN, data=data)
         self.auth_sid = self.get_cookie(response1, 'auth_sid')
         self.token = self.get_header(response1, 'x-csrf-token')
         self.user_id = self.get_json_value(response1, 'user_id')
 
+    @allure.description("This test successfully authorize user by email and password")
     def test_positive_auth_check(self):
         # auth_sid, token, user_id = self.get_response()
-        response2 = requests.get(
-            self.url_auth,
+        response2 = MyRequests.get(
+            URL_AUTH,
             headers={"x-csrf-token": self.token},
             cookies={"auth_sid": self.auth_sid}
         )
@@ -36,23 +39,23 @@ class TestUserAuth(BaseCase):
             'User id from login is not equal user id from auth request'
         )
 
+    @allure.description("This test checks authorization status w/o sending auth cookie or token")
     @pytest.mark.parametrize('condition', exclude_params)
     def test_negative_auth_check(self, condition):
         # auth_sid, token, user_id = self.get_response()
-
         if condition == 'no_cookie':
-            response2 = requests.get(
-                self.url_auth,
+            response2 = MyRequests.get(
+                URL_AUTH,
                 headers={'x-csrf-token': self.token}
             )
         elif condition == 'no_token':
-            response2 = requests.get(
-                self.url_auth,
+            response2 = MyRequests.get(
+                URL_AUTH,
                 cookies={"auth_sid": self.auth_sid}
             )
         else:
-            response2 = requests.get(
-                self.url_auth
+            response2 = MyRequests.get(
+                URL_AUTH
             )
         Assertions.assert_json_value_by_name(
             response2,
@@ -60,4 +63,3 @@ class TestUserAuth(BaseCase):
             0,
             'User is authorized with condition {condition}'
         )
-

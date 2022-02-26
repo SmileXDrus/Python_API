@@ -7,14 +7,15 @@
 # @ lastName : string
 # @ email : string
 # @ password : string
-URL_USER = 'https://playground.learnqa.ru/api/user/'
+
+URL_USER = '/user/'
 
 # GET Get user id you are authorizes as OR get 0 if not authorized
-URL_AUTH = 'https://playground.learnqa.ru/api/user/auth'
+URL_AUTH = '/user/auth'
 
 # POST Logs user into the system
 # Params:
 # @ email : string
 # @ password : string
-URL_LOGIN = "https://playground.learnqa.ru/api/user/login"
+URL_LOGIN = "/user/login"
 

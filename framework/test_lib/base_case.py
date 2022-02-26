@@ -3,12 +3,13 @@ from datetime import datetime
 
 from requests import Response
 
+
 class BaseCase:
-    def get_cookie (self, response: Response, cookie_name):
+    def get_cookie(self, response: Response, cookie_name):
         assert cookie_name in response.cookies, f'Cannot find cookie with name {cookie_name} in the last response'
         return response.cookies[cookie_name]
 
-    def get_header (self, response: Response, header_name):
+    def get_header(self, response: Response, header_name):
         assert header_name in response.headers, f'Cannot find header with name {header_name} in the last response'
         return response.headers[header_name]
 
@@ -26,7 +27,7 @@ class BaseCase:
             domain = "example.com"
             random_part = datetime.now().strftime("%m%d%Y%H%M%S")
             email = f"{base_port}{random_part}@{domain}"
-        return  {
+        return {
             'password': '1234',
             'username': 'learnqa',
             'firstName': 'learnqa',
