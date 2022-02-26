@@ -1,7 +1,15 @@
 import json.decoder
+import random
+import string
 from datetime import datetime
 
 from requests import Response
+
+
+def get_random_string(lenn):
+    letters = string.ascii_lowercase
+    rand_string = ''.join(random.choice(letters) for i in range(lenn))
+    return rand_string
 
 
 class BaseCase:
