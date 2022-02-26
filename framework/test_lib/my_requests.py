@@ -3,6 +3,7 @@ import allure
 from framework.test_lib.logger import Logger
 from environment import ENV_OBJECT
 
+
 class MyRequests:
     @staticmethod
     def post(url: str, data: dict = None, headers: dict = None, cookies: dict = None):
@@ -49,3 +50,11 @@ class MyRequests:
         Logger.add_response(response)
 
         return response
+
+# docker
+# 1) docker pull python
+# 2) docker build -t pytest_runner .
+# docker run --rm --mount type=bind,src=C:\Users\user\PycharmProjects\Python_API,target=/tests_project/ pytest_runner
+# --rm удаление контейнера
+#
+

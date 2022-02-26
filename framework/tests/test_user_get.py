@@ -23,8 +23,6 @@ class TestUserGet(BaseCase):
         token = self.get_header(response1, 'x-csrf-token')
         user_if_from_auth_method = self.get_json_value(response1, 'user_id')
 
-        print(auth_sid)
-        print(token)
         response2 = MyRequests.get(
             f"{URL_USER}{user_if_from_auth_method}",
             headers={'x-csrf-token': token},
