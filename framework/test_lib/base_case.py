@@ -2,8 +2,9 @@ import json.decoder
 import random
 import string
 from datetime import datetime
-
 from requests import Response
+from framework.test_lib.my_requests import MyRequests
+from framework.tests.tests_data_test import *
 
 
 def get_random_string(lenn):
@@ -42,3 +43,19 @@ class BaseCase:
             'lastName': 'learnqa',
             'email': email
         }
+
+    def create_user_with_random_email(self, param: str = None):
+        data = self.prepare_registration_data()
+        response = MyRequests.post(URL_USER, data=data)
+        if param == "all":
+            return self.get_json_value(response, 'id'), data["username"], \
+                   data["firstName"], data["lastName"], data["email"], data["password"]
+        elif param == "firstName":
+            return self.get_json_value(response, 'id'), data["firstName"], data["email"], data["password"]
+        elif param == "auth":
+            return self.get_json_value(response, 'id'), data["email"], data["password"]
+        elif param == "username":
+            return self.get_json_value(response, 'id'), data["username"]
+        else:
+            return self.get_json_value(response, 'id')
+

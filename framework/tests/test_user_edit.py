@@ -1,3 +1,5 @@
+import time
+
 import pytest
 
 from framework.test_lib.base_case import BaseCase
@@ -53,6 +55,7 @@ class TestUserEdit(BaseCase):
     # Попытаемся изменить данные пользователя, будучи авторизованными другим пользователем
     def test_edit_user_as_auth_other_user(self):
         id_user_1, email_user_1, psw_user_1 = self.create_user_with_random_email("auth")
+        time.sleep(0.01)
         id_user_2, first_name_user_2, email_user_2, psw_user_2 = self.create_user_with_random_email("firstName")
         new_name = "Changed Name"
 
