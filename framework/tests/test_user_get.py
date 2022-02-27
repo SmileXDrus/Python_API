@@ -42,8 +42,7 @@ class TestUserGet(BaseCase):
         token = self.get_header(response1, 'x-csrf-token')
         # user_id_from_auth_method = self.get_json_value(response1, 'user_id')
 
-        new_user_id = self.create_user_with_existing_email()
-        print(new_user_id)
+        new_user_id = self.create_user_with_random_email()
 
         response2 = MyRequests.get(
             f"{URL_USER}{new_user_id}",
@@ -55,7 +54,7 @@ class TestUserGet(BaseCase):
         Assertions.assert_json_has_not_key(response2, 'lastName')
         Assertions.assert_json_has_key(response2, 'username')
 
-    def create_user_with_existing_email(self):
+    def create_user_with_random_email(self):
         data = self.prepare_registration_data()
-        response1_2 = MyRequests.post(URL_USER, data=data)
-        return self.get_json_value(response1_2, 'id')
+        response = MyRequests.post(URL_USER, data=data)
+        return self.get_json_value(response, 'id')
