@@ -1,11 +1,12 @@
 import time
-
+import allure
 from framework.test_lib.assertions import Assertions
 from framework.test_lib.base_case import BaseCase
 from framework.test_lib.my_requests import MyRequests
 from framework.tests.tests_data_test import *
 
 
+@allure.epic("Delete cases")
 class TestUserDelete(BaseCase):
     # попытка удалить пользователя по ID 2
     def test_delete_protected_user(self):
@@ -69,7 +70,7 @@ class TestUserDelete(BaseCase):
     # Третий - негативный, попробовать удалить пользователя, будучи авторизованными другим пользователем.
     def test_delete_user_as_other_user(self):
         id_user_1, email_user_1, psw_user_1 = self.create_user_with_random_email("auth")
-        time.sleep(0.01)
+        time.sleep(0.05)
         id_user_2 = self.create_user_with_random_email()
 
         # LOGIN

@@ -1,9 +1,10 @@
+import allure
 from framework.test_lib.base_case import BaseCase
 from framework.test_lib.assertions import Assertions
 from framework.test_lib.my_requests import MyRequests
 from framework.tests.tests_data_test import *
 
-
+@allure.epic("Get cases")
 class TestUserGet(BaseCase):
     def test_get_user_details_not_auth(self):
         response = MyRequests.get(f"{URL_USER}2")

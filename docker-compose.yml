@@ -18,3 +18,7 @@ services:
 # docker run --rm --mount type=bind,src=C:\Users\user\PycharmProjects\Python_API,target=/tests_project/ pytest_runner
 # --rm удаление контейнера
 #
+# allure
+# python -m pytest --alluredir=framework/tests/test_result/ framework/tests/test_user_auth.py
+# allure serve framework/tests/test_result/
+# https://docs.qameta.io/allure/

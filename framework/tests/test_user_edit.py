@@ -1,13 +1,13 @@
 import time
-
+import allure
 import pytest
-
 from framework.test_lib.base_case import BaseCase
 from framework.test_lib.assertions import Assertions
 from framework.test_lib.my_requests import MyRequests
 from framework.tests.tests_data_test import *
 
 
+@allure.epic("Edit cases")
 class TestUserEdit(BaseCase):
     def test_edit_just_created_user_positive(self):
         register_data = self.prepare_registration_data()

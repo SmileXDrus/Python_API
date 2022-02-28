@@ -1,13 +1,12 @@
-import random
-
+import allure
 import pytest
-
 from framework.test_lib.assertions import Assertions
 from framework.test_lib.base_case import BaseCase, get_random_string
 from framework.test_lib.my_requests import MyRequests
 from framework.tests.tests_data_test import *
 
 
+@allure.epic("Register cases")
 class TestUserRegister(BaseCase):
     def test_create_user_success(self):
         data = self.prepare_registration_data()
